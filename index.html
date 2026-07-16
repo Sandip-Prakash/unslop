@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unslop -- The Anti-Slop Content Framework</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f8f7f4;
+  --ink: #141210;
+  --accent: #2563eb;
+  --muted: #6b7280;
+  --surface: #ffffff;
+  --border: #e5e3df;
+  --absence: #dc2626;
+  --presence: #16a34a;
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2.5rem;
+  background: rgba(248,247,244,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+.nav-logo span { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.15s;
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-cta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--surface);
+  background: var(--ink);
+  padding: 0.5rem 1.1rem;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.nav-cta:hover { background: var(--accent); }
+
+/* HERO */
+.hero {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 9rem 2.5rem 6rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.hero-left {}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: rgba(37,99,235,0.08);
+  border: 1px solid rgba(37,99,235,0.2);
+  padding: 0.3rem 0.75rem;
+  border-radius: 100px;
+  margin-bottom: 1.75rem;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.hero-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 6vw, 5rem);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+
+.hero-name span { color: var(--accent); }
+
+.hero-descriptor {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: -0.01em;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+}
+
+.hero-para {
+  font-size: 1rem;
+  color: var(--ink);
+  line-height: 1.75;
+  max-width: 46ch;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+}
+
+.hero-para strong { font-weight: 500; }
+
+.install-box {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 1.25rem;
+  max-width: 480px;
+}
+
+.install-cmd {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-right: none;
+  padding: 0.75rem 1.25rem;
+  flex: 1;
+  border-radius: 6px 0 0 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.install-cmd span { color: var(--accent); }
+
+.copy-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--surface);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  border-radius: 0 6px 6px 0;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.copy-btn:hover { background: var(--accent); border-color: var(--accent); }
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--surface);
+  background: var(--accent);
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: opacity 0.15s;
+  display: inline-block;
+}
+
+.btn-primary:hover { opacity: 0.88; }
+
+.btn-ghost {
+  font-size: 0.875rem;
+  color: var(--muted);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.15s;
+}
+
+.btn-ghost:hover { color: var(--ink); }
+.btn-ghost::after { content: 'GitHub'; font-size: 0.75rem; }
+
+/* DEMO CARD */
+.demo-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(20,18,16,0.06), 0 1px 4px rgba(20,18,16,0.04);
+}
+
+.demo-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  background: #fafaf9;
+}
+
+.demo-dots {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.demo-dots span {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.demo-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+.demo-body { padding: 1.5rem; }
+
+.demo-tab-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.demo-tab {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  text-transform: uppercase;
+}
+
+.demo-tab.active-before {
+  background: rgba(220,38,38,0.08);
+  color: var(--absence);
+  border-color: rgba(220,38,38,0.2);
+}
+
+.demo-tab.active-after {
+  background: rgba(22,163,74,0.08);
+  color: var(--presence);
+  border-color: rgba(22,163,74,0.2);
+}
+
+.demo-tab.inactive {
+  color: var(--muted);
+  background: transparent;
+  border-color: var(--border);
+}
+
+.demo-content-before {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: rgba(20,18,16,0.45);
+  font-style: italic;
+  padding: 1rem;
+  background: rgba(220,38,38,0.04);
+  border-radius: 6px;
+  border-left: 3px solid rgba(220,38,38,0.3);
+  margin-bottom: 1rem;
+}
+
+.demo-content-after {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--ink);
+  padding: 1rem;
+  background: rgba(22,163,74,0.05);
+  border-radius: 6px;
+  border-left: 3px solid rgba(22,163,74,0.4);
+  margin-bottom: 1rem;
+}
+
+.demo-signal-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.signal-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 100px;
+  text-transform: uppercase;
+}
+
+.signal-pill.fail {
+  background: rgba(220,38,38,0.08);
+  color: var(--absence);
+  text-decoration: line-through;
+}
+
+.signal-pill.pass {
+  background: rgba(22,163,74,0.1);
+  color: var(--presence);
+}
+
+/* TICKER */
+.ticker-wrap {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+  padding: 0.75rem 0;
+  background: var(--surface);
+}
+
+.ticker {
+  display: flex;
+  gap: 3rem;
+  white-space: nowrap;
+  animation: tick 25s linear infinite;
+}
+
+.ticker-item {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+  text-decoration: line-through;
+  text-decoration-color: rgba(220,38,38,0.5);
+  flex-shrink: 0;
+}
+
+@keyframes tick {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* MENTAL MODEL */
+.mental-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 2.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.section-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.section-headline {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+  color: var(--ink);
+}
+
+.section-headline em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.section-body {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 46ch;
+}
+
+/* MAP */
+.map-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 12px rgba(20,18,16,0.04);
+}
+
+.map-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.map-grid {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 260px;
+  margin: 0 auto 1.25rem;
+}
+
+.map-line {
+  position: absolute;
+  background: var(--border);
+}
+
+.map-line.h {
+  width: 100%; height: 1px;
+  top: 50%; transform: translateY(-50%);
+}
+
+.map-line.v {
+  height: 100%; width: 1px;
+  left: 50%; transform: translateX(-50%);
+}
+
+.map-axis {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9ca3af;
+}
+
+.map-axis.t { top: 2px; left: 50%; transform: translateX(-50%); }
+.map-axis.b { bottom: 2px; left: 50%; transform: translateX(-50%); }
+.map-axis.l { left: 0; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+.map-axis.r { right: 0; top: 50%; transform: translateY(-50%) rotate(90deg); }
+
+.map-zone {
+  position: absolute;
+  font-size: 0.6rem;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.map-zone.absence { top: 18%; left: 8%; color: rgba(220,38,38,0.5); }
+.map-zone.presence { bottom: 18%; right: 5%; color: rgba(22,163,74,0.7); }
+
+.dot {
+  position: absolute;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dot.a { background: rgba(220,38,38,0.4); }
+.dot.p { background: var(--presence); }
+
+.dot-label {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.52rem;
+  white-space: nowrap;
+  transform: translateX(10px) translateY(-3px);
+}
+
+.dot-label.a { color: rgba(220,38,38,0.6); }
+.dot-label.p { color: var(--presence); }
+
+.map-note {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* SIGNALS */
+.signals-section {
+  background: var(--ink);
+  padding: 6rem 0;
+}
+
+.signals-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+.signals-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.signals-headline {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: #f8f7f4;
+}
+
+.signals-headline em { font-style: italic; color: var(--accent); }
+
+.signals-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: rgba(248,247,244,0.3);
+  letter-spacing: 0.1em;
+  padding-bottom: 0.25rem;
+}
+
+.signals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(248,247,244,0.08);
+  border: 1px solid rgba(248,247,244,0.08);
+}
+
+.sig-card {
+  background: var(--ink);
+  padding: 2rem;
+  transition: background 0.2s;
+  position: relative;
+}
+
+.sig-card:hover { background: #1c1a17; }
+
+.sig-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(248,247,244,0.25);
+  letter-spacing: 0.12em;
+  margin-bottom: 1rem;
+}
+
+.sig-type {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.5rem;
+  border-radius: 100px;
+  margin-bottom: 0.875rem;
+  border: 1px solid;
+}
+
+.sig-type.absence {
+  color: rgba(220,38,38,0.7);
+  border-color: rgba(220,38,38,0.25);
+  background: rgba(220,38,38,0.06);
+}
+
+.sig-type.presence {
+  color: rgba(22,163,74,0.8);
+  border-color: rgba(22,163,74,0.25);
+  background: rgba(22,163,74,0.06);
+}
+
+.sig-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #f8f7f4;
+  line-height: 1.25;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.sig-desc {
+  font-size: 0.845rem;
+  color: rgba(248,247,244,0.45);
+  line-height: 1.65;
+}
+
+.sig-cta-card {
+  background: rgba(37,99,235,0.08);
+  border: 1px solid rgba(37,99,235,0.2);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.sig-cta-text {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #f8f7f4;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+/* BAN */
+.ban-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 6rem 2.5rem;
+}
+
+.ban-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.ban-headline {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.ban-headline em { color: var(--absence); font-style: italic; }
+
+.ban-sub {
+  font-size: 0.875rem;
+  color: var(--muted);
+  max-width: 44ch;
+  line-height: 1.6;
+}
+
+.ban-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.ban-cat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.ban-cat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.ban-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.ban-word {
+  font-size: 0.78rem;
+  color: rgba(20,18,16,0.4);
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  text-decoration: line-through;
+  text-decoration-color: rgba(220,38,38,0.5);
+  background: #fafaf9;
+}
+
+/* INSTALL */
+.install-section {
+  background: var(--accent);
+  padding: 5rem 2.5rem;
+}
+
+.install-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.install-headline {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.install-sub {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.75;
+  max-width: 44ch;
+}
+
+.install-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.install-card {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.install-card-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 0.1em;
+  padding-top: 0.1rem;
+  min-width: 1.5rem;
+}
+
+.install-card-content strong {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+  margin-bottom: 0.2rem;
+}
+
+.install-card-content span {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+}
+
+/* ORIGIN */
+.origin-section {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 7rem 2.5rem;
+  text-align: center;
+}
+
+.origin-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2rem;
+}
+
+.origin-quote {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  letter-spacing: -0.02em;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 1.75rem;
+}
+
+.origin-quote em { font-style: italic; color: var(--accent); }
+
+.origin-body {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  max-width: 58ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.origin-byline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.75rem 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-brand {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.footer-brand span { color: var(--accent); }
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.footer-links a:hover { color: var(--ink); }
+
+.footer-open {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 3rem; padding-top: 7rem; }
+  .mental-section { grid-template-columns: 1fr; gap: 3rem; }
+  .signals-grid { grid-template-columns: 1fr 1fr; }
+  .ban-grid { grid-template-columns: 1fr; }
+  .install-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  nav { padding: 1rem 1.5rem; }
+  .nav-links li:not(:last-child) { display: none; }
+}
+
+@media (max-width: 600px) {
+  .signals-grid { grid-template-columns: 1fr; }
+  .hero-name { font-size: 2.8rem; }
+  .install-box { flex-direction: column; }
+  .install-cmd { border-right: 1px solid var(--border); border-bottom: none; border-radius: 6px 6px 0 0; }
+  .copy-btn { border-radius: 0 0 6px 6px; text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker { animation: none; }
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Un<span>slop</span></a>
+  <ul class="nav-links">
+    <li><a href="#signals">Signals</a></li>
+    <li><a href="#install">Install</a></li>
+    <li><a href="https://github.com" target="_blank">GitHub</a></li>
+    <li><a href="#install" class="nav-cta">Install free</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">Open source skill file</div>
+    <h1 class="hero-name">Un<span>slop</span></h1>
+    <p class="hero-descriptor">The anti-slop content framework for AI agents</p>
+    <p class="hero-para">
+      <strong>AI content is everywhere. Good AI content is rare.</strong>
+      Open-source skill files that stop Claude, ChatGPT, and Gemini from
+      generating copy that feels like nobody wrote it.
+      Five signals. Any writer. Free.
+    </p>
+
+    <div class="install-box">
+      <div class="install-cmd"><span>$</span> paste SKILL.md into your AI to install</div>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText('paste SKILL.md into your AI to install'); this.textContent='Copied'; setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
+    </div>
+
+    <div class="hero-actions">
+      <a href="#install" class="btn-primary">Get the skill file</a>
+      <a href="https://github.com" class="btn-ghost" target="_blank"></a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="demo-card">
+      <div class="demo-topbar">
+        <div class="demo-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="demo-title">Presence Test -- live example</div>
+        <div style="width:40px"></div>
+      </div>
+      <div class="demo-body">
+        <div class="demo-tab-row">
+          <span class="demo-tab active-before">Before</span>
+          <span class="demo-tab active-after">After</span>
+        </div>
+        <div class="demo-content-before">
+          "Our revolutionary platform seamlessly empowers teams to unlock
+          their full potential with cutting-edge, industry-leading tools
+          designed to transform the way you work."
+        </div>
+        <div class="demo-content-after">
+          No more "does 3pm work? okay how about Thursday?" for the tenth time.
+          Books the meeting in one message. You get your mornings back.
+        </div>
+        <div class="demo-signal-row">
+          <span class="signal-pill fail">Revolutionary</span>
+          <span class="signal-pill fail">Seamlessly</span>
+          <span class="signal-pill fail">Cutting-edge</span>
+          <span class="signal-pill fail">Empower</span>
+          <span class="signal-pill pass">Signal 1: pass</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">Revolutionary</span>
+    <span class="ticker-item">Transformative</span>
+    <span class="ticker-item">Seamlessly</span>
+    <span class="ticker-item">Cutting-edge</span>
+    <span class="ticker-item">Innovative</span>
+    <span class="ticker-item">Powerful</span>
+    <span class="ticker-item">Unleash</span>
+    <span class="ticker-item">Elevate</span>
+    <span class="ticker-item">Supercharge</span>
+    <span class="ticker-item">World-class</span>
+    <span class="ticker-item">Game-changer</span>
+    <span class="ticker-item">Robust</span>
+    <span class="ticker-item">Dynamic</span>
+    <span class="ticker-item">Disruptive</span>
+    <span class="ticker-item">Empower</span>
+    <span class="ticker-item">Next-level</span>
+    <span class="ticker-item">Revolutionary</span>
+    <span class="ticker-item">Transformative</span>
+    <span class="ticker-item">Seamlessly</span>
+    <span class="ticker-item">Cutting-edge</span>
+    <span class="ticker-item">Innovative</span>
+    <span class="ticker-item">Powerful</span>
+    <span class="ticker-item">Unleash</span>
+    <span class="ticker-item">Elevate</span>
+    <span class="ticker-item">Supercharge</span>
+    <span class="ticker-item">World-class</span>
+    <span class="ticker-item">Game-changer</span>
+    <span class="ticker-item">Robust</span>
+    <span class="ticker-item">Dynamic</span>
+    <span class="ticker-item">Disruptive</span>
+    <span class="ticker-item">Empower</span>
+    <span class="ticker-item">Next-level</span>
+  </div>
+</div>
+
+<!-- MENTAL MODEL -->
+<section class="mental-section">
+  <div>
+    <div class="section-eyebrow">The mental model</div>
+    <h2 class="section-headline">
+      Excess signals<br>hidden <em>absence.</em><br>
+      Specificity signals<br>real presence.
+    </h2>
+    <p class="section-body">
+      Two questions reveal everything about a piece of writing.
+      How much is here? And how specific is it?
+      AI defaults to too much, too general. Every time.
+      The five signals map exactly where it goes wrong, and how to fix it.
+    </p>
+  </div>
+
+  <div class="map-card">
+    <div class="map-title">The two-axis map</div>
+    <div class="map-grid">
+      <div class="map-line h"></div>
+      <div class="map-line v"></div>
+      <span class="map-axis t">General</span>
+      <span class="map-axis b">Specific</span>
+      <span class="map-axis l">Too much</span>
+      <span class="map-axis r">Right amount</span>
+      <span class="map-zone absence">Absence zone</span>
+      <span class="map-zone presence">Presence zone</span>
+
+      <div class="dot a" style="left:22%;top:25%">
+        <span class="dot-label a">Signal 1</span>
+      </div>
+      <div class="dot a" style="left:32%;top:35%">
+        <span class="dot-label a">Signal 2</span>
+      </div>
+      <div class="dot a" style="left:18%;top:18%">
+        <span class="dot-label a">Signal 3</span>
+      </div>
+      <div class="dot p" style="left:74%;top:72%">
+        <span class="dot-label p">Signal 4</span>
+      </div>
+      <div class="dot p" style="left:80%;top:82%">
+        <span class="dot-label p">Signal 5</span>
+      </div>
+    </div>
+    <p class="map-note">
+      Signals 1, 2, 3 land in the absence zone.<br>
+      Signals 4 and 5 earn the presence zone.<br>
+      The map produces the signals.
+    </p>
+  </div>
+</section>
+
+<!-- SIGNALS -->
+<section class="signals-section" id="signals">
+  <div class="signals-inner">
+    <div class="signals-header">
+      <h2 class="signals-headline">
+        Absence has<br><em>five disguises.</em>
+      </h2>
+      <div class="signals-meta">05 signals</div>
+    </div>
+
+    <div class="signals-grid">
+      <div class="sig-card">
+        <div class="sig-num">01</div>
+        <span class="sig-type absence">Absence</span>
+        <h3 class="sig-name">Over-effort breaks trust</h3>
+        <p class="sig-desc">
+          Stacked claims, adjectives piled on adjectives, sentences that exist
+          to impress. The brain reads: if they are working this hard to convince
+          me, they must have something to hide. Empty vessels make the most noise.
+        </p>
+      </div>
+
+      <div class="sig-card">
+        <div class="sig-num">02</div>
+        <span class="sig-type absence">Absence</span>
+        <h3 class="sig-name">Over-perfection breaks connection</h3>
+        <p class="sig-desc">
+          One smooth, even, rehearsed pass. No hesitation, no texture.
+          We connect to the human behind the work, not the work itself.
+          A flawless surface has no human to connect to.
+        </p>
+      </div>
+
+      <div class="sig-card">
+        <div class="sig-num">03</div>
+        <span class="sig-type absence">Absence</span>
+        <h3 class="sig-name">Over-clutter breaks worth</h3>
+        <p class="sig-desc">
+          Everything covered, every feature listed. Premium things say one
+          thing. Cheap things shout everything. What you do not say signals
+          as much as what you do.
+        </p>
+      </div>
+
+      <div class="sig-card">
+        <div class="sig-num">04</div>
+        <span class="sig-type presence">Presence</span>
+        <h3 class="sig-name">Specificity signals lived truth</h3>
+        <p class="sig-desc">
+          Real memory stores sensory detail. When someone actually lived
+          something, the specifics are there. Category language proves absence.
+          Detail proves presence.
+        </p>
+      </div>
+
+      <div class="sig-card">
+        <div class="sig-num">05</div>
+        <span class="sig-type presence">Presence</span>
+        <h3 class="sig-name">Narrowing signals confidence</h3>
+        <p class="sig-desc">
+          Claiming to be for everyone is what insecure things do. A thing
+          that knows exactly who it is for reads as real and confident.
+          Narrowing is not an apology. It is a declaration.
+        </p>
+      </div>
+
+      <div class="sig-cta-card">
+        <div class="sig-cta-text">
+          Run the full test on any piece of writing.
+        </div>
+        <a href="#install" class="btn-primary">Get the skill file</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BAN LIST -->
+<section class="ban-section">
+  <div class="ban-header">
+    <div>
+      <h2 class="ban-headline">
+        Remove these <em>first.</em>
+      </h2>
+      <p class="ban-sub">
+        They collapse trust before a reader reaches your message.
+        Each one asserts value without demonstrating it.
+      </p>
+    </div>
+  </div>
+
+  <div class="ban-grid">
+    <div class="ban-cat">
+      <div class="ban-cat-label">Words that assert without demonstrating</div>
+      <div class="ban-words">
+        <span class="ban-word">Revolutionary</span>
+        <span class="ban-word">Transformative</span>
+        <span class="ban-word">Seamless</span>
+        <span class="ban-word">Cutting-edge</span>
+        <span class="ban-word">Innovative</span>
+        <span class="ban-word">Powerful</span>
+        <span class="ban-word">Unleash</span>
+        <span class="ban-word">Elevate</span>
+        <span class="ban-word">Supercharge</span>
+        <span class="ban-word">World-class</span>
+        <span class="ban-word">Game-changer</span>
+        <span class="ban-word">Robust</span>
+        <span class="ban-word">Dynamic</span>
+        <span class="ban-word">Empower</span>
+        <span class="ban-word">Next-level</span>
+      </div>
+    </div>
+
+    <div class="ban-cat">
+      <div class="ban-cat-label">Punctuation giveaway</div>
+      <div class="ban-words">
+        <span class="ban-word">Em-dash</span>
+        <span class="ban-word">En-dash</span>
+      </div>
+      <br>
+      <div class="ban-cat-label" style="margin-top:1rem">Banned openers</div>
+      <div class="ban-words">
+        <span class="ban-word">Certainly!</span>
+        <span class="ban-word">Absolutely!</span>
+        <span class="ban-word">Great question!</span>
+        <span class="ban-word">I would be happy to</span>
+        <span class="ban-word">In today's world</span>
+      </div>
+    </div>
+
+    <div class="ban-cat" style="background: rgba(37,99,235,0.04); border-color: rgba(37,99,235,0.15);">
+      <div class="ban-cat-label" style="color: var(--accent)">The replacement rule</div>
+      <p style="font-size:0.875rem; color: var(--muted); line-height:1.7;">
+        Replace every banned word with the specific true thing it was trying to gesture at.
+        Not "revolutionary platform" but what it actually does.
+        Not "seamless experience" but what the person actually feels.
+        The specific true thing beats any adjective.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALL -->
+<section class="install-section" id="install">
+  <div class="install-inner">
+    <div>
+      <h2 class="install-headline">
+        Install once.<br>
+        Applies every time.
+      </h2>
+      <p class="install-sub">
+        This will not change your tone of voice. Think of it as an expert
+        copywriter sitting next to you who knows your voice, catches when
+        you drift into slop, and pulls you back without rewriting who you are.
+        It preserves the tone. It strips the AI residue.
+      </p>
+    </div>
+
+    <div class="install-cards">
+      <div class="install-card">
+        <div class="install-card-num">01</div>
+        <div class="install-card-content">
+          <strong>Paste into any AI</strong>
+          <span>Open SKILL.md, copy the contents, paste at the start of your conversation. Works with Claude, ChatGPT, Gemini, and any LLM.</span>
+        </div>
+      </div>
+
+      <div class="install-card">
+        <div class="install-card-num">02</div>
+        <div class="install-card-content">
+          <strong>Add to your project</strong>
+          <span>Copy SKILL.md into your project root. Any AI agent that reads skill files picks it up automatically on every run.</span>
+        </div>
+      </div>
+
+      <div class="install-card">
+        <div class="install-card-num">03</div>
+        <div class="install-card-content">
+          <strong>Star on GitHub</strong>
+          <span>Free and open source. Fork it, adapt it, build on it. If it improves your work, share it.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ORIGIN -->
+<section class="origin-section">
+  <div class="origin-eyebrow">Why this exists</div>
+  <h2 class="origin-quote">
+    "I could tell when writing was AI-generated.<br>
+    The strange part was, I <em>could not explain why.</em>"
+  </h2>
+  <p class="origin-body">
+    Over years of copywriting and market research, conversations with more than
+    2,500 people in person, face to face, certain patterns kept appearing.
+    Human writing carries signals that are hard to fake: lived experience,
+    emotional risk, specific observation, genuine intent.
+    Unslop is those patterns, organized into something anyone can use.
+  </p>
+  <div class="origin-byline">Sandip Prakash Badrappan</div>
+</section>
+
+<footer>
+  <div class="footer-brand">Un<span>slop</span></div>
+  <ul class="footer-links">
+    <li><a href="#">SKILL.md</a></li>
+    <li><a href="#">README</a></li>
+    <li><a href="#">GitHub</a></li>
+  </ul>
+  <div class="footer-open">Open source. Free forever.</div>
+</footer>
+
+</body>
+</html>
