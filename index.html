@@ -18,6 +18,9 @@
   --border: #e5e3df;
   --absence: #dc2626;
   --presence: #16a34a;
+  --section-pad: clamp(3rem, 8vw, 6rem);
+  --page-pad: clamp(1.25rem, 5vw, 2.5rem);
+  --max-w: 1200px;
 }
 
 html { font-size: 16px; scroll-behavior: smooth; }
@@ -25,10 +28,11 @@ html { font-size: 16px; scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-weight: 300;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* NAV */
@@ -39,27 +43,28 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2.5rem;
-  background: rgba(248,247,244,0.92);
+  padding: 1rem var(--page-pad);
+  background: rgba(248,247,244,0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
+  min-height: 60px;
 }
 
 .nav-logo {
-  font-family: 'Syne', sans-serif;
+  font-family: "Syne", sans-serif;
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   color: var(--ink);
   text-decoration: none;
   letter-spacing: -0.02em;
+  flex-shrink: 0;
 }
-
 .nav-logo span { color: var(--accent); }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   list-style: none;
 }
 
@@ -69,138 +74,130 @@ nav {
   text-decoration: none;
   font-weight: 400;
   transition: color 0.15s;
+  white-space: nowrap;
 }
-
 .nav-links a:hover { color: var(--ink); }
 
 .nav-cta {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--surface);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  color: var(--surface) !important;
   background: var(--ink);
-  padding: 0.5rem 1.1rem;
+  padding: 0.45rem 1rem;
   text-decoration: none;
   border-radius: 4px;
   transition: background 0.15s;
   white-space: nowrap;
 }
-
-.nav-cta:hover { background: var(--accent); }
+.nav-cta:hover { background: var(--accent) !important; }
 
 /* HERO */
 .hero {
-  max-width: 1200px;
+  max-width: var(--max-w);
   margin: 0 auto;
-  padding: 9rem 2.5rem 6rem;
+  padding: clamp(6rem, 15vw, 9rem) var(--page-pad) clamp(3rem, 8vw, 6rem);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5rem;
+  gap: clamp(2rem, 5vw, 5rem);
   align-items: center;
 }
-
-.hero-left {}
 
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
   letter-spacing: 0.08em;
   color: var(--accent);
   background: rgba(37,99,235,0.08);
   border: 1px solid rgba(37,99,235,0.2);
   padding: 0.3rem 0.75rem;
   border-radius: 100px;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
 }
-
 .hero-badge::before {
-  content: '';
+  content: "";
   width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--accent);
+  flex-shrink: 0;
 }
 
 .hero-name {
-  font-family: 'Syne', sans-serif;
+  font-family: "Syne", sans-serif;
   font-weight: 800;
-  font-size: clamp(3rem, 6vw, 5rem);
+  font-size: clamp(2.8rem, 7vw, 5rem);
   letter-spacing: -0.04em;
   line-height: 0.95;
   color: var(--ink);
-  margin-bottom: 1rem;
+  margin-bottom: 0.875rem;
 }
-
 .hero-name span { color: var(--accent); }
 
 .hero-descriptor {
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
+  font-family: "Inter", sans-serif;
+  font-size: 0.75rem;
   font-weight: 500;
   color: var(--muted);
-  letter-spacing: -0.01em;
-  margin-bottom: 1.5rem;
-  text-transform: uppercase;
-  font-size: 0.8rem;
   letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
 }
 
 .hero-para {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2vw, 1rem);
   color: var(--ink);
   line-height: 1.75;
   max-width: 46ch;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   font-weight: 300;
 }
-
 .hero-para strong { font-weight: 500; }
 
 .install-box {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 0;
   margin-bottom: 1.25rem;
-  max-width: 480px;
+  max-width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border);
 }
 
 .install-cmd {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  color: var(--ink);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-right: none;
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem 1rem;
   flex: 1;
-  border-radius: 6px 0 0 6px;
+  min-width: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-.install-cmd span { color: var(--accent); }
+.install-cmd strong { color: var(--ink); font-weight: 500; }
 
 .copy-btn {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
   color: var(--surface);
   background: var(--ink);
-  border: 1px solid var(--ink);
+  border: none;
   padding: 0.75rem 1rem;
   cursor: pointer;
-  border-radius: 0 6px 6px 0;
   transition: background 0.15s;
   white-space: nowrap;
+  flex-shrink: 0;
 }
-
-.copy-btn:hover { background: var(--accent); border-color: var(--accent); }
+.copy-btn:hover { background: var(--accent); }
 
 .hero-actions {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
@@ -214,8 +211,8 @@ nav {
   border-radius: 6px;
   transition: opacity 0.15s;
   display: inline-block;
+  white-space: nowrap;
 }
-
 .btn-primary:hover { opacity: 0.88; }
 
 .btn-ghost {
@@ -226,10 +223,10 @@ nav {
   align-items: center;
   gap: 0.35rem;
   transition: color 0.15s;
+  white-space: nowrap;
 }
-
 .btn-ghost:hover { color: var(--ink); }
-.btn-ghost::after { content: 'GitHub'; font-size: 0.75rem; }
+.btn-ghost::after { content: "GitHub"; font-size: 0.75rem; }
 
 /* DEMO CARD */
 .demo-card {
@@ -238,327 +235,194 @@ nav {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 24px rgba(20,18,16,0.06), 0 1px 4px rgba(20,18,16,0.04);
+  width: 100%;
 }
 
 .demo-topbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.875rem 1.25rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--border);
   background: #fafaf9;
 }
+.demo-dots { display: flex; gap: 0.3rem; }
+.demo-dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--border); }
+.demo-title { font-family: "JetBrains Mono", monospace; font-size: 0.6rem; color: var(--muted); }
 
-.demo-dots {
-  display: flex;
-  gap: 0.35rem;
-}
+.demo-body { padding: clamp(1rem, 3vw, 1.5rem); }
 
-.demo-dots span {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--border);
-}
-
-.demo-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: var(--muted);
-  letter-spacing: 0.06em;
-}
-
-.demo-body { padding: 1.5rem; }
-
-.demo-tab-row {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1.25rem;
-}
-
+.demo-tab-row { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
 .demo-tab {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6rem;
   letter-spacing: 0.08em;
-  padding: 0.25rem 0.65rem;
+  padding: 0.22rem 0.6rem;
   border-radius: 4px;
-  cursor: pointer;
   border: 1px solid transparent;
-  transition: all 0.15s;
   text-transform: uppercase;
 }
-
-.demo-tab.active-before {
-  background: rgba(220,38,38,0.08);
-  color: var(--absence);
-  border-color: rgba(220,38,38,0.2);
-}
-
-.demo-tab.active-after {
-  background: rgba(22,163,74,0.08);
-  color: var(--presence);
-  border-color: rgba(22,163,74,0.2);
-}
-
-.demo-tab.inactive {
-  color: var(--muted);
-  background: transparent;
-  border-color: var(--border);
-}
+.demo-tab.active-before { background: rgba(220,38,38,0.08); color: var(--absence); border-color: rgba(220,38,38,0.2); }
+.demo-tab.active-after { background: rgba(22,163,74,0.08); color: var(--presence); border-color: rgba(22,163,74,0.2); }
 
 .demo-content-before {
-  font-size: 0.875rem;
-  line-height: 1.65;
-  color: rgba(20,18,16,0.45);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: rgba(20,18,16,0.4);
   font-style: italic;
-  padding: 1rem;
+  padding: 0.875rem;
   background: rgba(220,38,38,0.04);
   border-radius: 6px;
-  border-left: 3px solid rgba(220,38,38,0.3);
-  margin-bottom: 1rem;
+  border-left: 3px solid rgba(220,38,38,0.25);
+  margin-bottom: 0.875rem;
 }
-
 .demo-content-after {
-  font-size: 0.875rem;
-  line-height: 1.65;
+  font-size: 0.82rem;
+  line-height: 1.6;
   color: var(--ink);
-  padding: 1rem;
+  padding: 0.875rem;
   background: rgba(22,163,74,0.05);
   border-radius: 6px;
-  border-left: 3px solid rgba(22,163,74,0.4);
-  margin-bottom: 1rem;
+  border-left: 3px solid rgba(22,163,74,0.35);
+  margin-bottom: 0.875rem;
 }
-
-.demo-signal-row {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
+.demo-signal-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .signal-pill {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 0.06em;
-  padding: 0.2rem 0.55rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.05em;
+  padding: 0.18rem 0.5rem;
   border-radius: 100px;
   text-transform: uppercase;
 }
-
-.signal-pill.fail {
-  background: rgba(220,38,38,0.08);
-  color: var(--absence);
-  text-decoration: line-through;
-}
-
-.signal-pill.pass {
-  background: rgba(22,163,74,0.1);
-  color: var(--presence);
-}
+.signal-pill.fail { background: rgba(220,38,38,0.08); color: var(--absence); text-decoration: line-through; }
+.signal-pill.pass { background: rgba(22,163,74,0.1); color: var(--presence); }
 
 /* TICKER */
 .ticker-wrap {
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   overflow: hidden;
-  padding: 0.75rem 0;
+  padding: 0.7rem 0;
   background: var(--surface);
 }
-
 .ticker {
   display: flex;
-  gap: 3rem;
+  gap: 2.5rem;
   white-space: nowrap;
-  animation: tick 25s linear infinite;
+  animation: tick 30s linear infinite;
+  width: max-content;
 }
-
 .ticker-item {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
   color: var(--muted);
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-decoration: line-through;
-  text-decoration-color: rgba(220,38,38,0.5);
+  text-decoration-color: rgba(220,38,38,0.45);
   flex-shrink: 0;
 }
-
-@keyframes tick {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
+@keyframes tick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* MENTAL MODEL */
 .mental-section {
-  max-width: 1200px;
+  max-width: var(--max-w);
   margin: 0 auto;
-  padding: 6rem 2.5rem;
+  padding: var(--section-pad) var(--page-pad);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5rem;
+  gap: clamp(2rem, 5vw, 5rem);
   align-items: center;
 }
 
 .section-eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.62rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .section-headline {
-  font-family: 'Syne', sans-serif;
+  font-family: "Syne", sans-serif;
   font-weight: 700;
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem);
   letter-spacing: -0.03em;
   line-height: 1.1;
   margin-bottom: 1.25rem;
   color: var(--ink);
 }
-
-.section-headline em {
-  font-style: italic;
-  color: var(--accent);
-}
+.section-headline em { font-style: italic; color: var(--accent); }
 
 .section-body {
   font-size: 0.95rem;
   color: var(--muted);
   line-height: 1.75;
-  max-width: 46ch;
 }
 
-/* MAP */
 .map-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 2rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
   box-shadow: 0 2px 12px rgba(20,18,16,0.04);
 }
-
 .map-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.62rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
-
 .map-grid {
   position: relative;
   width: 100%;
   aspect-ratio: 1;
-  max-width: 260px;
+  max-width: 240px;
   margin: 0 auto 1.25rem;
 }
-
-.map-line {
-  position: absolute;
-  background: var(--border);
-}
-
-.map-line.h {
-  width: 100%; height: 1px;
-  top: 50%; transform: translateY(-50%);
-}
-
-.map-line.v {
-  height: 100%; width: 1px;
-  left: 50%; transform: translateX(-50%);
-}
-
+.map-line { position: absolute; background: var(--border); }
+.map-line.h { width: 100%; height: 1px; top: 50%; transform: translateY(-50%); }
+.map-line.v { height: 100%; width: 1px; left: 50%; transform: translateX(-50%); }
 .map-axis {
   position: absolute;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.55rem;
-  letter-spacing: 0.08em;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #9ca3af;
 }
-
 .map-axis.t { top: 2px; left: 50%; transform: translateX(-50%); }
 .map-axis.b { bottom: 2px; left: 50%; transform: translateX(-50%); }
 .map-axis.l { left: 0; top: 50%; transform: translateY(-50%) rotate(-90deg); }
 .map-axis.r { right: 0; top: 50%; transform: translateY(-50%) rotate(90deg); }
-
-.map-zone {
-  position: absolute;
-  font-size: 0.6rem;
-  font-style: italic;
-  font-weight: 500;
-}
-
-.map-zone.absence { top: 18%; left: 8%; color: rgba(220,38,38,0.5); }
-.map-zone.presence { bottom: 18%; right: 5%; color: rgba(22,163,74,0.7); }
-
-.dot {
-  position: absolute;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
+.map-zone { position: absolute; font-size: 0.58rem; font-style: italic; font-weight: 500; }
+.map-zone.absence { top: 16%; left: 6%; color: rgba(220,38,38,0.5); }
+.map-zone.presence { bottom: 16%; right: 4%; color: rgba(22,163,74,0.7); }
+.dot { position: absolute; width: 7px; height: 7px; border-radius: 50%; transform: translate(-50%,-50%); }
 .dot.a { background: rgba(220,38,38,0.4); }
 .dot.p { background: var(--presence); }
-
-.dot-label {
-  position: absolute;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.52rem;
-  white-space: nowrap;
-  transform: translateX(10px) translateY(-3px);
-}
-
+.dot-label { position: absolute; font-family: "JetBrains Mono", monospace; font-size: 0.5rem; white-space: nowrap; transform: translateX(10px) translateY(-3px); }
 .dot-label.a { color: rgba(220,38,38,0.6); }
 .dot-label.p { color: var(--presence); }
-
-.map-note {
-  font-size: 0.78rem;
-  color: var(--muted);
-  line-height: 1.6;
-  text-align: center;
-}
+.map-note { font-size: 0.75rem; color: var(--muted); line-height: 1.6; text-align: center; }
 
 /* SIGNALS */
-.signals-section {
-  background: var(--ink);
-  padding: 6rem 0;
-}
-
-.signals-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2.5rem;
-}
-
+.signals-section { background: var(--ink); padding: var(--section-pad) 0; }
+.signals-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--page-pad); }
 .signals-header {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  margin-bottom: 3rem;
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.75rem;
 }
-
-.signals-headline {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  color: #f8f7f4;
-}
-
+.signals-headline { font-family: "Syne", sans-serif; font-weight: 700; font-size: clamp(1.6rem, 4vw, 2.4rem); letter-spacing: -0.03em; line-height: 1.1; color: #f8f7f4; }
 .signals-headline em { font-style: italic; color: var(--accent); }
-
-.signals-meta {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  color: rgba(248,247,244,0.3);
-  letter-spacing: 0.1em;
-  padding-bottom: 0.25rem;
-}
+.signals-meta { font-family: "JetBrains Mono", monospace; font-size: 0.62rem; color: rgba(248,247,244,0.3); letter-spacing: 0.1em; padding-bottom: 0.25rem; }
 
 .signals-grid {
   display: grid;
@@ -567,339 +431,127 @@ nav {
   background: rgba(248,247,244,0.08);
   border: 1px solid rgba(248,247,244,0.08);
 }
-
-.sig-card {
-  background: var(--ink);
-  padding: 2rem;
-  transition: background 0.2s;
-  position: relative;
-}
-
+.sig-card { background: var(--ink); padding: clamp(1.25rem, 3vw, 2rem); transition: background 0.2s; }
 .sig-card:hover { background: #1c1a17; }
-
-.sig-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  color: rgba(248,247,244,0.25);
-  letter-spacing: 0.12em;
-  margin-bottom: 1rem;
-}
-
+.sig-num { font-family: "JetBrains Mono", monospace; font-size: 0.58rem; color: rgba(248,247,244,0.25); letter-spacing: 0.12em; margin-bottom: 0.875rem; }
 .sig-type {
   display: inline-block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.58rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.56rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 0.18rem 0.5rem;
+  padding: 0.16rem 0.5rem;
   border-radius: 100px;
-  margin-bottom: 0.875rem;
+  margin-bottom: 0.75rem;
   border: 1px solid;
 }
-
-.sig-type.absence {
-  color: rgba(220,38,38,0.7);
-  border-color: rgba(220,38,38,0.25);
-  background: rgba(220,38,38,0.06);
-}
-
-.sig-type.presence {
-  color: rgba(22,163,74,0.8);
-  border-color: rgba(22,163,74,0.25);
-  background: rgba(22,163,74,0.06);
-}
-
-.sig-name {
-  font-family: 'Syne', sans-serif;
-  font-weight: 600;
-  font-size: 1.05rem;
-  color: #f8f7f4;
-  line-height: 1.25;
-  margin-bottom: 0.75rem;
-  letter-spacing: -0.01em;
-}
-
-.sig-desc {
-  font-size: 0.845rem;
-  color: rgba(248,247,244,0.45);
-  line-height: 1.65;
-}
-
-.sig-cta-card {
-  background: rgba(37,99,235,0.08);
-  border: 1px solid rgba(37,99,235,0.2);
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 1.25rem;
-}
-
-.sig-cta-text {
-  font-family: 'Syne', sans-serif;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #f8f7f4;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-}
+.sig-type.absence { color: rgba(220,38,38,0.7); border-color: rgba(220,38,38,0.25); background: rgba(220,38,38,0.06); }
+.sig-type.presence { color: rgba(22,163,74,0.8); border-color: rgba(22,163,74,0.25); background: rgba(22,163,74,0.06); }
+.sig-name { font-family: "Syne", sans-serif; font-weight: 600; font-size: clamp(0.95rem, 2vw, 1.05rem); color: #f8f7f4; line-height: 1.25; margin-bottom: 0.65rem; letter-spacing: -0.01em; }
+.sig-desc { font-size: 0.82rem; color: rgba(248,247,244,0.45); line-height: 1.65; }
+.sig-cta-card { background: rgba(37,99,235,0.08); border: 1px solid rgba(37,99,235,0.2); padding: clamp(1.25rem, 3vw, 2rem); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 1.25rem; }
+.sig-cta-text { font-family: "Syne", sans-serif; font-weight: 600; font-size: clamp(0.95rem, 2vw, 1.1rem); color: #f8f7f4; line-height: 1.3; letter-spacing: -0.01em; }
 
 /* BAN */
-.ban-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 6rem 2.5rem;
-}
-
-.ban-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 3rem;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.ban-headline {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  color: var(--ink);
-}
-
+.ban-section { max-width: var(--max-w); margin: 0 auto; padding: var(--section-pad) var(--page-pad); }
+.ban-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: clamp(1.5rem, 4vw, 3rem); flex-wrap: wrap; gap: 1rem; }
+.ban-headline { font-family: "Syne", sans-serif; font-weight: 700; font-size: clamp(1.5rem, 3.5vw, 2.2rem); letter-spacing: -0.03em; line-height: 1.1; color: var(--ink); }
 .ban-headline em { color: var(--absence); font-style: italic; }
-
-.ban-sub {
-  font-size: 0.875rem;
-  color: var(--muted);
-  max-width: 44ch;
-  line-height: 1.6;
-}
-
-.ban-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-}
-
-.ban-cat {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.5rem;
-}
-
-.ban-cat-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border);
-}
-
-.ban-words {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.ban-word {
-  font-size: 0.78rem;
-  color: rgba(20,18,16,0.4);
-  padding: 0.2rem 0.5rem;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  text-decoration: line-through;
-  text-decoration-color: rgba(220,38,38,0.5);
-  background: #fafaf9;
-}
+.ban-sub { font-size: 0.875rem; color: var(--muted); max-width: 44ch; line-height: 1.6; }
+.ban-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+.ban-cat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: clamp(1rem, 3vw, 1.5rem); }
+.ban-cat-label { font-family: "JetBrains Mono", monospace; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.875rem; padding-bottom: 0.65rem; border-bottom: 1px solid var(--border); }
+.ban-words { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.ban-word { font-size: 0.75rem; color: rgba(20,18,16,0.4); padding: 0.18rem 0.45rem; border: 1px solid var(--border); border-radius: 4px; text-decoration: line-through; text-decoration-color: rgba(220,38,38,0.45); background: #fafaf9; }
 
 /* INSTALL */
-.install-section {
-  background: var(--accent);
-  padding: 5rem 2.5rem;
-}
-
-.install-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-}
-
-.install-headline {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  color: white;
-  margin-bottom: 1rem;
-}
-
-.install-sub {
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.7);
-  line-height: 1.75;
-  max-width: 44ch;
-}
-
-.install-cards {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.install-card {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 8px;
-  padding: 1.1rem 1.25rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-}
-
-.install-card-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
-  color: rgba(255,255,255,0.4);
-  letter-spacing: 0.1em;
-  padding-top: 0.1rem;
-  min-width: 1.5rem;
-}
-
-.install-card-content strong {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: white;
-  margin-bottom: 0.2rem;
-}
-
-.install-card-content span {
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.55);
-  line-height: 1.5;
-}
+.install-section { background: var(--accent); padding: var(--section-pad) var(--page-pad); }
+.install-inner { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.install-headline { font-family: "Syne", sans-serif; font-weight: 700; font-size: clamp(1.6rem, 4vw, 2.6rem); letter-spacing: -0.03em; line-height: 1.1; color: white; margin-bottom: 0.875rem; }
+.install-sub { font-size: 0.9rem; color: rgba(255,255,255,0.7); line-height: 1.75; }
+.install-cards { display: flex; flex-direction: column; gap: 0.65rem; }
+.install-card { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 1rem 1.25rem; display: flex; align-items: flex-start; gap: 0.875rem; }
+.install-card-num { font-family: "JetBrains Mono", monospace; font-size: 0.6rem; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; padding-top: 0.1rem; min-width: 1.5rem; flex-shrink: 0; }
+.install-card-content strong { display: block; font-size: 0.875rem; font-weight: 500; color: white; margin-bottom: 0.15rem; }
+.install-card-content span { font-size: 0.78rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
 
 /* ORIGIN */
-.origin-section {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 7rem 2.5rem;
-  text-align: center;
-}
-
-.origin-eyebrow {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 2rem;
-}
-
-.origin-quote {
-  font-family: 'Syne', sans-serif;
-  font-weight: 600;
-  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
-  letter-spacing: -0.02em;
-  line-height: 1.35;
-  color: var(--ink);
-  margin-bottom: 1.75rem;
-}
-
+.origin-section { max-width: 720px; margin: 0 auto; padding: var(--section-pad) var(--page-pad); text-align: center; }
+.origin-eyebrow { font-family: "JetBrains Mono", monospace; font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.75rem; }
+.origin-quote { font-family: "Syne", sans-serif; font-weight: 600; font-size: clamp(1.25rem, 3vw, 1.9rem); letter-spacing: -0.02em; line-height: 1.35; color: var(--ink); margin-bottom: 1.5rem; }
 .origin-quote em { font-style: italic; color: var(--accent); }
+.origin-body { font-size: 0.875rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+.origin-byline { font-family: "JetBrains Mono", monospace; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); }
 
-.origin-body {
-  font-size: 0.9rem;
-  color: var(--muted);
-  line-height: 1.8;
-  margin-bottom: 1.5rem;
-  max-width: 58ch;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.origin-byline {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
+/* DIVIDER */
+.section-divider { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--page-pad); border-top: 1px solid var(--border); }
 
 /* FOOTER */
-footer {
-  border-top: 1px solid var(--border);
-  padding: 1.75rem 2.5rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.footer-brand {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 0.875rem;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-}
-
+footer { border-top: 1px solid var(--border); padding: 1.5rem var(--page-pad); max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.875rem; }
+.footer-brand { font-family: "Syne", sans-serif; font-weight: 700; font-size: 0.875rem; color: var(--ink); letter-spacing: -0.01em; }
 .footer-brand span { color: var(--accent); }
-
-.footer-links {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
-}
-
-.footer-links a {
-  font-size: 0.78rem;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.15s;
-}
-
+.footer-links { display: flex; gap: 1.25rem; list-style: none; }
+.footer-links a { font-size: 0.75rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
 .footer-links a:hover { color: var(--ink); }
+.footer-open { font-family: "JetBrains Mono", monospace; font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); }
 
-.footer-open {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-}
-
-/* RESPONSIVE */
+/* RESPONSIVE - TABLET */
 @media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; gap: 3rem; padding-top: 7rem; }
-  .mental-section { grid-template-columns: 1fr; gap: 3rem; }
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding-top: clamp(5rem, 12vw, 7rem);
+  }
+  .hero-para { max-width: 100%; }
+  .mental-section { grid-template-columns: 1fr; gap: 2.5rem; }
+  .map-grid { max-width: 200px; }
   .signals-grid { grid-template-columns: 1fr 1fr; }
-  .ban-grid { grid-template-columns: 1fr; }
-  .install-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-  nav { padding: 1rem 1.5rem; }
-  .nav-links li:not(:last-child) { display: none; }
+  .ban-grid { grid-template-columns: 1fr 1fr; }
+  .install-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .nav-links li.hide-mobile { display: none; }
 }
 
+/* RESPONSIVE - MOBILE */
 @media (max-width: 600px) {
+  nav { padding: 0.875rem 1.25rem; gap: 0.75rem; }
+  .nav-logo { font-size: 1rem; }
+  .nav-links { gap: 0.75rem; }
+  .nav-links li:not(:last-child) { display: none; }
+
+  .hero { gap: 2rem; }
+  .hero-name { font-size: clamp(2.4rem, 12vw, 3.2rem); }
+  .hero-badge { font-size: 0.6rem; }
+
+  .install-box { flex-direction: column; border-radius: 8px; }
+  .install-cmd { border-radius: 6px 6px 0 0; font-size: 0.7rem; padding: 0.75rem 1rem; }
+  .copy-btn { border-radius: 0 0 6px 6px; text-align: center; padding: 0.75rem; width: 100%; }
+
+  .hero-actions { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .btn-primary { width: 100%; text-align: center; padding: 0.875rem 1.5rem; }
+  .btn-ghost { align-self: center; }
+
   .signals-grid { grid-template-columns: 1fr; }
-  .hero-name { font-size: 2.8rem; }
-  .install-box { flex-direction: column; }
-  .install-cmd { border-right: 1px solid var(--border); border-bottom: none; border-radius: 6px 6px 0 0; }
-  .copy-btn { border-radius: 0 0 6px 6px; text-align: center; }
+  .ban-grid { grid-template-columns: 1fr; }
+
+  .demo-card { font-size: 0.875rem; }
+  .demo-content-before, .demo-content-after { font-size: 0.78rem; padding: 0.75rem; }
+
+  .section-headline { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .ban-headline { font-size: clamp(1.4rem, 6vw, 1.8rem); }
+
+  .install-section { padding: clamp(2.5rem, 8vw, 4rem) var(--page-pad); }
+  .install-headline { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .install-sub { font-size: 0.85rem; }
+
+  .origin-quote { font-size: clamp(1.15rem, 5vw, 1.5rem); }
+
+  footer { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .footer-links { flex-wrap: wrap; gap: 0.875rem; }
+
+  .ticker-item { font-size: 0.65rem; }
+
+  .sig-cta-card { align-items: center; text-align: center; }
+  .btn-primary.full-mobile { width: 100%; text-align: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -913,14 +565,13 @@ footer {
 <nav>
   <a href="/" class="nav-logo">Un<span>slop</span></a>
   <ul class="nav-links">
-    <li><a href="#signals">Signals</a></li>
-    <li><a href="#install">Install</a></li>
-    <li><a href="https://github.com/Sandip-Prakash/unslop" target="_blank">GitHub</a></li>
+    <li class="hide-mobile"><a href="#signals">Signals</a></li>
+    <li class="hide-mobile"><a href="#install">Install</a></li>
+    <li class="hide-mobile"><a href="https://github.com/Sandip-Prakash/unslop" target="_blank">GitHub</a></li>
     <li><a href="https://raw.githubusercontent.com/Sandip-Prakash/unslop/main/SKILL.md" target="_blank" class="nav-cta">Install free</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-left">
     <div class="hero-badge">Open source skill file</div>
@@ -932,26 +583,22 @@ footer {
       generating copy that feels like nobody wrote it.
       Five signals. Any writer. Free.
     </p>
-
     <div class="install-box">
-      <div class="install-cmd"><span style="color:var(--muted);margin-right:0.5rem;">01</span> Copy SKILL.md and paste into Claude, ChatGPT, or Gemini</div>
+      <div class="install-cmd"><strong>step 1</strong> Copy SKILL.md and paste into your AI</div>
       <button class="copy-btn" onclick="copySkill(this)">Copy SKILL.md</button>
     </div>
-
     <div class="hero-actions">
       <a href="https://raw.githubusercontent.com/Sandip-Prakash/unslop/main/SKILL.md" target="_blank" class="btn-primary">Get the skill file</a>
-      <a href="https://github.com/Sandip-Prakash/unslop" class="btn-ghost" target="_blank"></a>
+      <a href="https://github.com/Sandip-Prakash/unslop" target="_blank" class="btn-ghost"></a>
     </div>
   </div>
 
   <div class="hero-right">
     <div class="demo-card">
       <div class="demo-topbar">
-        <div class="demo-dots">
-          <span></span><span></span><span></span>
-        </div>
+        <div class="demo-dots"><span></span><span></span><span></span></div>
         <div class="demo-title">Presence Test -- live example</div>
-        <div style="width:40px"></div>
+        <div style="width:32px"></div>
       </div>
       <div class="demo-body">
         <div class="demo-tab-row">
@@ -979,7 +626,6 @@ footer {
   </div>
 </section>
 
-<!-- TICKER -->
 <div class="ticker-wrap">
   <div class="ticker">
     <span class="ticker-item">Revolutionary</span>
@@ -1017,14 +663,10 @@ footer {
   </div>
 </div>
 
-<!-- MENTAL MODEL -->
 <section class="mental-section">
   <div>
     <div class="section-eyebrow">The mental model</div>
-    <h2 class="section-headline">
-      Excess signals<br>hidden <em>absence.</em><br>
-      Specificity signals<br>real presence.
-    </h2>
+    <h2 class="section-headline">Excess signals<br>hidden <em>absence.</em><br>Specificity signals<br>real presence.</h2>
     <p class="section-body">
       Two questions reveal everything about a piece of writing.
       How much is here? And how specific is it?
@@ -1032,7 +674,6 @@ footer {
       The five signals map exactly where it goes wrong, and how to fix it.
     </p>
   </div>
-
   <div class="map-card">
     <div class="map-title">The two-axis map</div>
     <div class="map-grid">
@@ -1044,143 +685,84 @@ footer {
       <span class="map-axis r">Right amount</span>
       <span class="map-zone absence">Absence zone</span>
       <span class="map-zone presence">Presence zone</span>
-
-      <div class="dot a" style="left:22%;top:25%">
-        <span class="dot-label a">Signal 1</span>
-      </div>
-      <div class="dot a" style="left:32%;top:35%">
-        <span class="dot-label a">Signal 2</span>
-      </div>
-      <div class="dot a" style="left:18%;top:18%">
-        <span class="dot-label a">Signal 3</span>
-      </div>
-      <div class="dot p" style="left:74%;top:72%">
-        <span class="dot-label p">Signal 4</span>
-      </div>
-      <div class="dot p" style="left:80%;top:82%">
-        <span class="dot-label p">Signal 5</span>
-      </div>
+      <div class="dot a" style="left:22%;top:25%"><span class="dot-label a">Signal 1</span></div>
+      <div class="dot a" style="left:32%;top:36%"><span class="dot-label a">Signal 2</span></div>
+      <div class="dot a" style="left:18%;top:18%"><span class="dot-label a">Signal 3</span></div>
+      <div class="dot p" style="left:74%;top:72%"><span class="dot-label p">Signal 4</span></div>
+      <div class="dot p" style="left:80%;top:82%"><span class="dot-label p">Signal 5</span></div>
     </div>
-    <p class="map-note">
-      Signals 1, 2, 3 land in the absence zone.<br>
-      Signals 4 and 5 earn the presence zone.<br>
-      The map produces the signals.
-    </p>
+    <p class="map-note">Signals 1, 2, 3 land in the absence zone.<br>Signals 4 and 5 earn the presence zone.<br>The map produces the signals.</p>
   </div>
 </section>
 
-<!-- SIGNALS -->
+<div class="section-divider"></div>
+
 <section class="signals-section" id="signals">
   <div class="signals-inner">
     <div class="signals-header">
-      <h2 class="signals-headline">
-        Absence has<br><em>five disguises.</em>
-      </h2>
+      <h2 class="signals-headline">Absence has<br><em>five disguises.</em></h2>
       <div class="signals-meta">05 signals</div>
     </div>
-
     <div class="signals-grid">
       <div class="sig-card">
         <div class="sig-num">01</div>
         <span class="sig-type absence">Absence</span>
         <h3 class="sig-name">Over-effort breaks trust</h3>
-        <p class="sig-desc">
-          Stacked claims, adjectives piled on adjectives, sentences that exist
-          to impress. The brain reads: if they are working this hard to convince
-          me, they must have something to hide. Empty vessels make the most noise.
-        </p>
+        <p class="sig-desc">Stacked claims, adjectives piled on adjectives, sentences that exist to impress. The brain reads: if they are working this hard to convince me, they must have something to hide. Empty vessels make the most noise.</p>
       </div>
-
       <div class="sig-card">
         <div class="sig-num">02</div>
         <span class="sig-type absence">Absence</span>
         <h3 class="sig-name">Over-perfection breaks connection</h3>
-        <p class="sig-desc">
-          One smooth, even, rehearsed pass. No hesitation, no texture.
-          We connect to the human behind the work, not the work itself.
-          A flawless surface has no human to connect to.
-        </p>
+        <p class="sig-desc">One smooth, even, rehearsed pass. No hesitation, no texture. We connect to the human behind the work, not the work itself. A flawless surface has no human to connect to.</p>
       </div>
-
       <div class="sig-card">
         <div class="sig-num">03</div>
         <span class="sig-type absence">Absence</span>
         <h3 class="sig-name">Over-clutter breaks worth</h3>
-        <p class="sig-desc">
-          Everything covered, every feature listed. Premium things say one
-          thing. Cheap things shout everything. What you do not say signals
-          as much as what you do.
-        </p>
+        <p class="sig-desc">Everything covered, every feature listed. Premium things say one thing. Cheap things shout everything. What you do not say signals as much as what you do.</p>
       </div>
-
       <div class="sig-card">
         <div class="sig-num">04</div>
         <span class="sig-type presence">Presence</span>
         <h3 class="sig-name">Specificity signals lived truth</h3>
-        <p class="sig-desc">
-          Real memory stores sensory detail. When someone actually lived
-          something, the specifics are there. Category language proves absence.
-          Detail proves presence.
-        </p>
+        <p class="sig-desc">Real memory stores sensory detail. When someone actually lived something, the specifics are there. Category language proves absence. Detail proves presence.</p>
       </div>
-
       <div class="sig-card">
         <div class="sig-num">05</div>
         <span class="sig-type presence">Presence</span>
         <h3 class="sig-name">Narrowing signals confidence</h3>
-        <p class="sig-desc">
-          Claiming to be for everyone is what insecure things do. A thing
-          that knows exactly who it is for reads as real and confident.
-          Narrowing is not an apology. It is a declaration.
-        </p>
+        <p class="sig-desc">Claiming to be for everyone is what insecure things do. A thing that knows exactly who it is for reads as real and confident. Narrowing is not an apology. It is a declaration.</p>
       </div>
-
       <div class="sig-cta-card">
-        <div class="sig-cta-text">
-          Run the full test on any piece of writing.
-        </div>
+        <div class="sig-cta-text">Run the full test on any piece of writing.</div>
         <a href="https://raw.githubusercontent.com/Sandip-Prakash/unslop/main/SKILL.md" target="_blank" class="btn-primary">Get the skill file</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- BAN LIST -->
 <section class="ban-section">
   <div class="ban-header">
     <div>
-      <h2 class="ban-headline">
-        Remove these <em>first.</em>
-      </h2>
-      <p class="ban-sub">
-        They collapse trust before a reader reaches your message.
-        Each one asserts value without demonstrating it.
-      </p>
+      <h2 class="ban-headline">Remove these <em>first.</em></h2>
+      <p class="ban-sub">They collapse trust before a reader reaches your message. Each one asserts value without demonstrating it.</p>
     </div>
   </div>
-
   <div class="ban-grid">
     <div class="ban-cat">
       <div class="ban-cat-label">Words that assert without demonstrating</div>
       <div class="ban-words">
-        <span class="ban-word">Revolutionary</span>
-        <span class="ban-word">Transformative</span>
-        <span class="ban-word">Seamless</span>
-        <span class="ban-word">Cutting-edge</span>
-        <span class="ban-word">Innovative</span>
-        <span class="ban-word">Powerful</span>
-        <span class="ban-word">Unleash</span>
-        <span class="ban-word">Elevate</span>
-        <span class="ban-word">Supercharge</span>
-        <span class="ban-word">World-class</span>
-        <span class="ban-word">Game-changer</span>
-        <span class="ban-word">Robust</span>
-        <span class="ban-word">Dynamic</span>
-        <span class="ban-word">Empower</span>
+        <span class="ban-word">Revolutionary</span><span class="ban-word">Transformative</span>
+        <span class="ban-word">Seamless</span><span class="ban-word">Cutting-edge</span>
+        <span class="ban-word">Innovative</span><span class="ban-word">Powerful</span>
+        <span class="ban-word">Unleash</span><span class="ban-word">Elevate</span>
+        <span class="ban-word">Supercharge</span><span class="ban-word">World-class</span>
+        <span class="ban-word">Game-changer</span><span class="ban-word">Robust</span>
+        <span class="ban-word">Dynamic</span><span class="ban-word">Empower</span>
         <span class="ban-word">Next-level</span>
       </div>
     </div>
-
     <div class="ban-cat">
       <div class="ban-cat-label">Punctuation giveaway</div>
       <div class="ban-words">
@@ -1190,17 +772,14 @@ footer {
       <br>
       <div class="ban-cat-label" style="margin-top:1rem">Banned openers</div>
       <div class="ban-words">
-        <span class="ban-word">Certainly!</span>
-        <span class="ban-word">Absolutely!</span>
-        <span class="ban-word">Great question!</span>
-        <span class="ban-word">I would be happy to</span>
+        <span class="ban-word">Certainly!</span><span class="ban-word">Absolutely!</span>
+        <span class="ban-word">Great question!</span><span class="ban-word">I would be happy to</span>
         <span class="ban-word">In today's world</span>
       </div>
     </div>
-
-    <div class="ban-cat" style="background: rgba(37,99,235,0.04); border-color: rgba(37,99,235,0.15);">
-      <div class="ban-cat-label" style="color: var(--accent)">The replacement rule</div>
-      <p style="font-size:0.875rem; color: var(--muted); line-height:1.7;">
+    <div class="ban-cat" style="background:rgba(37,99,235,0.04);border-color:rgba(37,99,235,0.15)">
+      <div class="ban-cat-label" style="color:var(--accent)">The replacement rule</div>
+      <p style="font-size:0.85rem;color:var(--muted);line-height:1.7">
         Replace every banned word with the specific true thing it was trying to gesture at.
         Not "revolutionary platform" but what it actually does.
         Not "seamless experience" but what the person actually feels.
@@ -1210,14 +789,12 @@ footer {
   </div>
 </section>
 
-<!-- INSTALL -->
+<div class="section-divider"></div>
+
 <section class="install-section" id="install">
   <div class="install-inner">
     <div>
-      <h2 class="install-headline">
-        Install once.<br>
-        Applies every time.
-      </h2>
+      <h2 class="install-headline">Install once.<br>Applies every time.</h2>
       <p class="install-sub">
         This will not change your tone of voice. Think of it as an expert
         copywriter sitting next to you who knows your voice, catches when
@@ -1225,16 +802,14 @@ footer {
         It preserves the tone. It strips the AI residue.
       </p>
     </div>
-
     <div class="install-cards">
       <div class="install-card">
         <div class="install-card-num">01</div>
         <div class="install-card-content">
           <strong>Paste into any AI</strong>
-          <span>Open SKILL.md, copy the contents, paste at the start of your conversation. Works with Claude, ChatGPT, Gemini, and any LLM.</span>
+          <span>Click "Get the skill file," copy all contents, paste at the start of your conversation. Works with Claude, ChatGPT, Gemini, and any LLM.</span>
         </div>
       </div>
-
       <div class="install-card">
         <div class="install-card-num">02</div>
         <div class="install-card-content">
@@ -1242,7 +817,6 @@ footer {
           <span>Copy SKILL.md into your project root. Any AI agent that reads skill files picks it up automatically on every run.</span>
         </div>
       </div>
-
       <div class="install-card">
         <div class="install-card-num">03</div>
         <div class="install-card-content">
@@ -1254,7 +828,6 @@ footer {
   </div>
 </section>
 
-<!-- ORIGIN -->
 <section class="origin-section">
   <div class="origin-eyebrow">Why this exists</div>
   <h2 class="origin-quote">
@@ -1281,17 +854,18 @@ footer {
   <div class="footer-open">Open source. Free forever.</div>
 </footer>
 
-
 <script>
 var SKILL_CONTENT = "---\nname: presence-test\ndescription: A psychological framework for judging and generating AI writing that feels like a real human made it. Five signals that reveal whether a piece of writing has genuine presence or just the performance of one. Use it to evaluate what you have, or to steer what you are about to write.\n---\n\n# The Presence Test\n## A psychological framework for curating and generating AI writing that feels human\n\n> Taste Skill fixed how AI-built interfaces look.\n> This fixes how AI-written words feel.\n\n---\n\n## Why this exists\n\nAI now produces infinite content. The bottleneck is no longer generating   it is knowing\nwhat is good.\n\nThe human brain has always had a detector for this. Long before AI, we instinctively\nsensed when someone was overselling, over-polishing, or performing authenticity instead\nof having it. We pulled back. We also sensed when something was real   lived, specific,\na little imperfect   and we leaned in. That detector did not change when AI arrived.\nAI just trips it constantly, by default, because it has no lived experience to draw from\nand no self that knows the right dose.\n\nThe Presence Test names the detector. It gives you five signals for reading whether a\npiece of writing has a real human behind it, or just the performance of one. Use it to\ncurate   score existing output and know why it passes or fails. Use it to generate  \ngive your AI the standard before it writes. Either way, the judgment is the same.\n\n---\n\n## The mental model: Presence vs Absence\n\nOne law underneath all five signals:\n\n**The human brain instinctively detects whether a real person genuinely invested\nthemselves. Excess signals hidden absence. Specificity and calibrated imperfection\nsignal real presence.**\n\nThe brain reads too much as a cover-up:\n- Too much selling means the product is weak\n- Too much polish means no real human did this honestly\n- Too much clutter means there is no real substance underneath\n\nThe brain reads the right amount, with real detail and honest edges, as truth.\n\nTaste is calibrating to the halfway point: invest enough to genuinely reach the other\nperson, never so much that it reads as compensation. Think of it like telling a friend\nabout something at a wedding. Specific, unforced, no pitch. That register is the target.\n\n---\n\n## The AI tells: ban these before anything else\n\nBefore applying the five signals, remove these first. They are the giveaways that\ncollapse trust before a reader even reaches your message.\n\n**Banned words and phrases (AI giveaway vocabulary):**\nRevolutionary, transformative, game-changer, paradigm shift, world-class, seamless,\npowerful, elevate, unleash, supercharge, cutting-edge, innovative, robust, leverage,\nsynergy, holistic, dynamic, disruptive, empower, unlock potential, take it to the\nnext level, in today's fast-paced world, it is important to note, certainly, absolutely,\nI would be happy to, as an AI language model, it is worth mentioning.\n\nThese words do not communicate anything specific. They signal effort to impress, which\nsignals hidden weakness. Replace each one with the specific true thing it was trying\nto gesture at.\n\n**Banned punctuation:**\nEm-dash ( ) and en-dash (-) anywhere in the output. Headlines, body copy, captions,\nbutton text, quotes, attribution. All of it. They are the single most common LLM\npunctuation tell. Use a plain hyphen, a comma, a period, or restructure the sentence.\nZero exceptions.\n\n**Banned sentence openers:**\n\"Certainly!\", \"Absolutely!\", \"Great question!\", \"Of course!\", \"Sure thing!\",\n\"I'd be happy to help with that.\" These perform enthusiasm instead of delivering it.\nStart with the answer.\n\n---\n\n## The five signals\n\nEach signal has three parts:\n1. The psychological mechanism   why the brain reads it as presence or absence\n2. A before/after example   slop vs presence, side by side\n3. Two paste-in instructions   one for generation, one for curation/judgment\n\n---\n\n### Signal 1   Over-effort breaks trust\n\n**The mechanism:**\n\nGoing beyond a point reads as too good to be true, which triggers suspicion. The brain\nreasons: if this person is working this hard to convince me, they must have something\nto hide. Only showing the good things signals concealment. Willingness to exaggerate\nsignals willingness to twist the truth.\n\nThe psychology of confidence: a calm, assured person does not need to oversell. They\nhave substance and do not feel the pressure to prove it. Empty vessels make the most\nnoise. Desperation to impress signals a lack behind the performance.\n\nBut restraint is not silence. A great product with no signal dies unseen. The skill is\nthe halfway point: invest enough effort to genuinely reach toward the person, and trust\nthem to close the distance. One true, specific claim stated once and stopped beats ten\ninflated ones.\n\nThe tell in AI writing: LLMs pile adjectives, stack benefits, and end every paragraph\nreaching for more. They do not know when to stop because they have no substance that\ncould be diminished by saying too much.\n\n**Before/after:**\n\nSlop:\n> Our revolutionary platform seamlessly empowers teams to unlock their full potential\n> with cutting-edge, industry-leading tools designed to transform the way you work  \n> faster, smarter, and more efficiently than ever before.\n\nPresence:\n> No more \"does 3pm work? okay how about Thursday?\" for the tenth time.\n> Books the meeting in one message. You get your mornings back.\n\nWhat changed: the presence version drops the reader into a recognizable lived moment\nbefore explaining anything. They feel the problem before they understand the solution.\nThat is the order real humans use. AI defaults to explain-then-feel. Humans feel-then-\nunderstand. Drop them into the moment, then let them close the distance.\n\n**Paste-in for generation:**\n> Do not stack claims or adjectives. State the single strongest true thing once, plainly,\n> then stop. Do not use: revolutionary, seamless, powerful, cutting-edge, transformative,\n> or any word that asserts value without demonstrating it. Instead of describing the\n> benefit, drop the reader into one specific, recognizable moment of the problem they\n> already know. Let them feel it before they understand it. One lived detail beats ten\n> stacked claims. Use no em-dashes.\n\n**Paste-in for curation/judgment:**\n> Score this piece against Signal 1 of the Presence Test. Does it oversell? Look for:\n> stacked adjectives, multiple claims in one sentence, superlatives, and sentences that\n> exist to impress rather than inform. Quote the specific line that passes or fails.\n> Then: does the piece drop the reader into a felt moment, or does it explain at them?\n> Pass or fail with evidence.\n\n---\n\n### Signal 2   Over-perfection breaks connection\n\n**The mechanism:**\n\nWe do not connect to output. We connect to the person we sense behind it. A flawless\nsurface hides the person, so there is no one to connect to   even if the writing is\ntechnically excellent.\n\nReal thought hesitates. It doubles back. It re-says a thing a better way. It admits\na small uncertainty. It is unrehearsed. These are not weaknesses. They are the evidence\nthat a human processed something in real time. AI comes out in one smooth pass   every\nsentence the same confident register, no hesitation, no aside, no self-correction. That\nuncanny-valley of smoothness is the tell.\n\nThe deeper principle: a human's honest effort   even ordinary effort   invites connection\nbecause we sense the real investment of a life. This is why Beeple's \"Everydays: 5000\nDays\" sold for $69 million. The value was not the images. It was 13 years of a real\nperson showing up every single day. The humanity was the product. A machine that\ngenerates 5,000 images in an hour produces nothing with that value, because there is no\nhuman investment to connect to.\n\nThe tell in AI writing: relentless even-tempered confidence. No texture, no variation,\nno admission that something was hard to figure out.\n\n**Before/after:**\n\nSlop:\n> Our onboarding process is designed to be intuitive and efficient, ensuring a seamless\n> experience that empowers users to get started quickly and confidently.\n\nPresence:\n> Onboarding takes ten minutes. We used to have a getting-started checklist, a tutorial\n> video, a progress bar   all the usual scaffolding. Turns out the guidance was the\n> friction. People just want to get started. We can drop tips in once they do.\n\nWhat changed: the presence version admits what did not work before, names the specific\nthings that were cut, and lands on the real insight (guidance was friction). That\nadmission is the human texture. The slop version has no texture, no admission, no one\nhome. Note: \"it just doesn't get in your way\" is itself a cliche now. Find the specific\ntrue thing instead.\n\n**Paste-in for generation:**\n> Do not write in one smooth, even, rehearsed pass. Let a little real texture show:\n> one self-correction, one honest aside, one thing you admit was harder than expected,\n> or varied sentence rhythm. One or two touches only, and they must be genuinely true  \n> a manufactured flaw to seem relatable is worse than the polish it replaced. The reader\n> should sense a real person thought this through, not that a flawless surface was\n> generated. No em-dashes.\n\n**Paste-in for curation/judgment:**\n> Score this piece against Signal 2 of the Presence Test. Is it too smooth? Look for:\n> uniform sentence register, no hesitation or self-correction, unbroken positivity,\n> no admission of anything difficult. Quote the line that most clearly shows no human\n> texture. Then check: is there anything that sounds like a person working something\n> out in real time? Pass or fail with evidence.\n\n---\n\n### Signal 3   Over-clutter breaks worth\n\n**The mechanism:**\n\nSaying everything destroys the value of anything. When writing is crammed with claims,\noptions, and selling points, the reader cannot find what matters, so nothing lands.\n\nThe psychology of restraint: in a world saturated with noise, choosing not to fill every\ngap is itself a signal. It reads as: I am confident enough in what I kept to leave the\nrest out. I respect your attention enough to have done the work of deciding what matters.\nRestraint signals substance. Clutter signals the absence of it.\n\nThis is the Hindi Medium principle: new money wears the jewellery, displays the car,\nfills every gap. Old money comes in shorts and running shoes. It does not feel the\npressure to prove anything because it is not compensating for a lack. The thing that\nrestrains itself signals it has more capacity than it is showing. That creates curiosity\nand trust.\n\nPremium restraint has two modes, and they are different:\n\nFunctional restraint: cut to the one true thing, stated plainly. Leave white space.\n\"This works for teams under 20.\" Clean, confident, done.\n\nPremium restraint: one specific, sensory, ownable detail fused to one identity or\nfeeling. Not \"timeless and elegant\"   those are adjectives that assert without\ndemonstrating. Instead: \"The bag you will hand to your daughter. It only gets better\nwith the years.\" The sensory-specific detail (it patinas, it improves) earns the\naspiration (legacy, permanence). Without the concrete detail, the aspiration floats.\nWithout the aspiration, the detail is just a spec sheet.\n\nFor premium writing: never justify the price or defend the value. The moment you\nexplain why something is worth it, you signal you are talking to a price-shopper.\nAssume the reader already understands quality. Use inviting verbs   Discover, Explore,\nEnjoy   not transactional ones   Buy, Get, Click here.\n\nThe tell in AI writing: exhaustive feature lists, every benefit covered, every use case\nmentioned. AI optimizes for coverage. Taste optimizes for impact.\n\n**Before/after:**\n\nSlop:\n> Our product offers a comprehensive suite of features including advanced analytics,\n> real-time reporting, customizable dashboards, seamless integrations, mobile access,\n> and 24/7 support   all designed to empower your team and drive measurable results.\n\nPresence (functional):\n> See what is actually happening in your business. Real-time. No dashboard to build first.\n\nPresence (premium):\n> Full-grain calfskin, edges painted by hand. Built to carry not just your essentials,\n> but your legacy.\n\nWhat changed: functional version cuts to one true outcome and stops. Premium version\nfuses one specific craft detail to one identity   and says nothing about price, features,\nor why it is worth it. The confidence of not justifying is the signal.\n\n**Paste-in for generation:**\n> Do not list everything. Identify the single strongest outcome or identity the reader\n> steps into and make that the only star. Cut every competing claim. For functional copy:\n> state the one true thing plainly and stop. For premium/aspirational copy: fuse one\n> specific, sensory, ownable detail to one identity or feeling   never justify the value,\n> assume the reader already understands quality. Use inviting verbs (Discover, Enjoy)\n> not transactional ones (Buy, Get). What you do not say signals as much as what you do.\n> No em-dashes.\n\n**Paste-in for curation/judgment:**\n> Score this piece against Signal 3 of the Presence Test. Is it cluttered? Look for:\n> feature lists, multiple competing claims, justification of price or value, defensive\n> language. Quote the line where the piece loses confidence and starts over-explaining.\n> Then: is there one clear star, or are five things fighting for attention? For premium\n> copy: does it assume belonging, or does it beg for it? Pass or fail with evidence.\n\n---\n\n### Signal 4   Specificity signals lived truth\n\n**The mechanism:**\n\nLived experience is stored as rich, multi-sensory memory. When you actually did\nsomething, the specific details are there to retrieve   the tang of the sambar, the\nfog in the valley at 8am, the bitter finish of the filter coffee. When someone is\ninventing, generalizing, or has not really done the thing, there are no stored specifics\nto pull. So they default to category language: outdoor activities, culinary experiences,\nfitness, personal growth.\n\nThe brain reads this instantly: detail means this person was really here, which means\nit is true. Category language means this person is summarizing from outside, which\nmeans it may be invented.\n\nBut specificity alone is still cold   like a camera, not a person. The full signal\nrequires two things: the named specific detail, and what it means to the person. \"I\nhike the LIC trail most mornings   there is a bend where the fog sits in the valley\ntill about 8. On the way back there is an underrated place called Sunrise Cafe. The\nclimb is excruciating at the start and genuinely godly once you are drenched in sweat\nat the top. I take the long route on purpose. It makes my day.\" That last line is the\nthing AI cannot invent: the specific reason it matters to this specific person.\n\nWhat you choose to notice also reveals who you are. The detail you lead with   what\nyou see first in a scene   shows where your attention lives. That involuntary specificity\nis the deepest form of presence. It cannot be faked because there is no motive to invent\na particular detail.\n\nThe tell in AI writing: smooth, category-level generalization. \"A seamless experience,\"\n\"meaningful connections,\" \"a passionate team.\" All category language. None of it could\nonly have been said by someone who was actually there.\n\n**Before/after:**\n\nSlop:\n> I am passionate about outdoor activities and enjoy exploring new cuisines and cultures\n> in my free time.\n\nPresence:\n> I hike the LIC trail most mornings   there is a bend where the fog sits in the valley\n> till about 8. On the way back there is this underrated place called Sunrise Cafe.\n> The climb is excruciating at the start and honestly godly once you are sweating at\n> the top. I take the long route on purpose. It makes my day.\n\nWhat changed: proper nouns (LIC trail, Sunrise Cafe), sensory detail (fog, excruciating,\nsweating), and the personal meaning (I take the long route on purpose). The slop version\ncould describe anyone. The presence version could only describe one person.\n\nAdvanced move: let what you choose to joke about or find absurd reveal character. An\ninside joke   \"it makes me 20 minutes late but I think that is why I can actually listen\nto my boss\"   signals a person with a specific life, not a summary of a life.\n\n**Paste-in for generation:**\n> Replace all category language with at least one named, specific thing   a real place,\n> a proper noun, a concrete number. Not \"a trail\" but \"the LIC trail.\" Not \"a coffee\n> shop\" but \"Sunrise Cafe.\" Then hit at least one sense the reader can feel in their\n> body   the excruciating start, the godly feeling after, the bitter coffee finish.\n> Then add one line of what it means to this specific person and why they do it.\n> Every detail must be true. None decorative. Named, sensory, and personal is the\n> combination AI cannot fake. No em-dashes.\n\n**Paste-in for curation/judgment:**\n> Score this piece against Signal 4 of the Presence Test. Look for category language:\n> any word that could describe a thousand different people or products (passionate,\n> innovative, meaningful, seamless, dynamic). Quote every category word you find.\n> Then look for specificity: named places, proper nouns, sensory details, personal\n> reasons. Quote the most specific line. Does this piece feel like it was written by\n> someone who was really there, or by someone summarizing from outside? Pass or fail\n> with evidence.\n\n---\n\n### Signal 5   Narrow instead of confess: calibrated edges signal confidence\n\n**The mechanism:**\n\nClaiming to be for everyone is what insecure, fake things do. A thing that knows\nexactly who it is for   and implicitly who it is not   reads as confident and real.\nThe narrowing is the honest edge. You are not apologizing. You are declaring a focus.\nAnd a thing that knows its focus reads as more trustworthy than a thing that is afraid\nto exclude anyone.\n\nThis works on two levels. Functional narrowing: \"Built for engineering teams under 20.\nIf that is you, it fits like it was made for you   because it was.\" The exclusion is\nimplied. No apology. The confidence of the claim is what builds trust.\n\nShowing a real, deliberate limit does two things at once: it proves the thing is real\n(real things have edges), and it signals the person is confident enough not to hide\nit. That confidence makes the reader feel safe   they no longer have to hunt for the\ncatch. The safety is trust.\n\nThe dosage is the skill. The world's word for the overdose is TMI. Naming who the\nthing is for is enough. You do not then need to detail every limitation it has. \"Works\nbest for teams under 20\" is the honest edge. \"Works best for teams under 20, and\nhonestly the reporting is thin and we have not fixed that yet\" is the overdose   that\nis airing problems, not signaling confidence. State the boundary once and stop. The\nrestraint in the admission is itself part of the confidence.\n\nDosage also depends on relationship. \"Give me 2 minutes\" to a manager. Full honesty\nwith a close friend. The right dose of vulnerability for the right relationship is\nthe whole skill. Knowing this   when to reveal, how much, for whom   is what\nseparates a person with real emotional intelligence from one performing it.\n\nThe tell in AI writing: unbroken positivity. Every feature excellent, every benefit\nunqualified, every profile a list of strengths. Nothing for anyone to push back on.\nThat frictionlessness is the tell   real things have edges, and the absence of any\nedge reads as sales copy, not truth.\n\n**Before/after:**\n\nSlop:\n> Our platform is the perfect solution for teams of any size, offering everything you\n> need to succeed with an intuitive, all-in-one experience.\n\nPresence:\n> Built for engineering teams under 20. If that is you, it fits like it was made for\n> you   because it was.\n\nPremium narrowing:\n> Yoga for bodies past 60. Slower, gentler, and built for joints that have earned\n> some patience.\n\nWhat changed: both presence versions exclude. Neither apologizes for it. The exclusion\nis the signal. \"For everyone\" is the tell. \"For exactly these people\" builds the trust\nthat \"for everyone\" destroys.\n\n**Paste-in for generation:**\n> Do not claim this is for everyone or all sizes or all levels. Name exactly who it is\n> for, specifically, in one clean line. Let the exclusion be implied   you do not need\n> to state who it is not for. If you include a real limitation, state it once and stop.\n> Do not over-confess: the confident version names the boundary and trusts the reader\n> to handle it. One true line of \"this is for X\" beats any list of strengths. No em-dashes.\n\n**Paste-in for curation/judgment:**\n> Score this piece against Signal 5 of the Presence Test. Does it claim to be for\n> everyone? Look for: \"all sizes,\" \"any team,\" \"everyone who wants to,\" \"perfect for\n> any,\" \"no matter where you are.\" Quote the line where the piece is afraid to exclude\n> anyone. Then look for narrowing: does it name a specific audience with confidence?\n> Does it have any honest edge, or is it all upside? Pass or fail with evidence.\n\n---\n\n## The pre-flight ban list\n\nRun this before calling any piece of writing done. If any of the following appear,\nfix them before shipping.\n\n**Banned words (assert value without demonstrating it):**\nRevolutionary, transformative, game-changer, paradigm shift, world-class, seamless,\npowerful, elevate, unleash, supercharge, cutting-edge, innovative, robust, leverage,\nsynergy, holistic, dynamic, disruptive, journey (used metaphorically), ecosystem\n(used metaphorically), unlock, empower, impactful, scalable, best-in-class,\nstate-of-the-art, next-level, future-proof.\n\nReplace each with the specific true thing it was trying to assert.\n\n**Banned punctuation:**\nEm-dash ( ) and en-dash (-). Anywhere. Use a plain hyphen, a comma, a period,\nor restructure the sentence. Zero exceptions.\n\n**Banned sentence openers:**\n\"Certainly!\", \"Absolutely!\", \"Great question!\", \"Of course!\", \"Sure thing!\",\n\"I would be happy to help with that.\", \"That is a great point.\",\n\"In today's fast-paced world,\", \"It is important to note that\",\n\"It is worth mentioning that\", \"As an AI language model,\"\n\n**Banned structural patterns:**\n- Three equal feature cards with identical structure\n- Bullet lists of five or more benefits with no hierarchy\n- \"Our mission is to...\" as an opener\n- Passive voice used to avoid claiming anything specific\n  (\"results may be experienced,\" \"improvements can be seen\")\n- The fake modesty opener: \"We are just a small team that...\"\n  followed by a brag\n\n---\n\n## How to run the full Presence Test on a piece of writing\n\nPaste this entire block into your AI with the piece of writing you want evaluated:\n\n---\n\nRun the Presence Test on the writing below. Score it against all five signals.\nFor each signal, give a pass or fail and quote the specific line that reveals it.\n\nSignal 1   Over-effort: Does it oversell? Are there stacked claims, adjectives,\nor sentences that exist to impress rather than inform? Does it drop the reader\ninto a felt moment, or explain at them?\n\nSignal 2   Over-perfection: Is it too smooth? Is there any human texture  \nself-correction, honest admission, varied rhythm? Or does it read like one\nclean rehearsed pass with no one home?\n\nSignal 3   Over-clutter: Is there one clear star, or are five things competing?\nFor premium copy: does it assume belonging or beg for it?\n\nSignal 4   Specificity: Is there at least one named, specific thing   a proper\nnoun, a concrete number, a sensory detail   that could only have come from\nsomeone who was really there? Or is it all category language?\n\nSignal 5   Narrowing: Does it name who it is for with confidence? Or does it\nclaim to work for everyone, which signals it has no real identity?\n\nAlso flag: any banned words (revolutionary, seamless, powerful, etc.), any\nem-dashes, and any banned sentence openers.\n\nThen give an overall pass or fail and the single highest-leverage fix.\n\nWriting to evaluate:\n[PASTE HERE]\n\n---\n\n## Scope\n\nThis skill is for persuasive, informational, and identity writing: landing page copy,\nmarketing emails, personal profiles (LinkedIn, dating, bio), product descriptions,\nbrand voice, and social copy.\n\nIt is not for:\n- Legal or compliance copy (different constraints apply)\n- Technical documentation (different register entirely)\n- Internal operations writing (tone is different by design)\n- Fiction (different craft, different goals)\n\nWithin scope: when in doubt, apply Signal 4 first. Specificity is the fastest fix\nand the least risky one in any context.\n\n---\n\n## What this is not\n\nNot a theory of taste. One focused lens: presence vs absence.\nNot a style guide. It does not prescribe a voice   it removes the absence of one.\nNot a replacement for good thinking. It cannot make a weak idea feel strong.\nIt can only make a true thing feel as true as it is.\nNot competing with visual taste frameworks. This is the verbal layer underneath.\n\n---\n\n*The Presence Test is open-source and free to use, adapt, and build on.*\n*If it improves your work, share it. That is the whole point.*\n";
 function copySkill(btn) {
   navigator.clipboard.writeText(SKILL_CONTENT).then(function() {
-    btn.textContent = 'Copied!';
-    setTimeout(function() { btn.textContent = 'Copy SKILL.md'; }, 2000);
+    btn.textContent = "Copied!";
+    setTimeout(function() { btn.textContent = "Copy SKILL.md"; }, 2000);
   }).catch(function() {
-    btn.textContent = 'Error';
+    btn.textContent = "Error - try again";
+    setTimeout(function() { btn.textContent = "Copy SKILL.md"; }, 2000);
   });
 }
 </script>
+
 </body>
 </html>
